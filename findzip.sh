@@ -30,12 +30,12 @@ done
           if [[ $machted_str == 1 ]] ; then 
            
           
-            echo "matched in ziiped file: $x"
-            #echo "keyword find in :`unzip -l $x  | grep -nRi "$keyword"`"
+            echo "matched in zipped file: $x"
+            echo "keyword find in : `unzip -p $x  | grep -ni "$keyword"`"
           
-         fi 
- done
+          fi 
+  done
  else
-echo "We are going to find your string $Keyword in plane Text file:"
+   echo "We are going to find your string $Keyword in plane Text file:"
 grep -rnwo $path_file -e $keyword
   fi
