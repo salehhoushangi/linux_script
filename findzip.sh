@@ -31,6 +31,7 @@ done
            
           
             echo "matched in $x"
+            echo "keyword find in :`unzip -l $x  | grep -nRi "$keyword"`"
           
          fi 
  done
