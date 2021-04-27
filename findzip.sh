@@ -19,8 +19,8 @@ do
         f) format=${OPTARG};;
    
    esac
-done 
- 
+done
+ if [[ $format == "zip" ]]; then 
  for x in `find $path_file -name *$format`;
     
        do   value=`unzip -p  $x 2>/dev/null`  
@@ -30,8 +30,12 @@ done
           if [[ $machted_str == 1 ]] ; then 
            
           
-            echo "matched in $x"
-            echo "keyword find in :`unzip -l $x  | grep -nRi "$keyword"`"
+            echo "matched in ziiped file: $x"
+            #echo "keyword find in :`unzip -l $x  | grep -nRi "$keyword"`"
           
          fi 
  done
+ else
+echo "We are going to find your string $Keyword in plane Text file:"
+grep -rnwo $path_file -e $keyword
+  fi
