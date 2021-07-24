@@ -8,8 +8,6 @@ Lua_problem="/opt/Lua_problem/"
 Lua_Git="/opt/Lua_Git/"
 #Git_Repo="ssh://git@bitbucket.dotin.ir:7999/it/jira-datacenter.git"
 Git_Repo="ssh://git@bitbucket.dotin.ir:7999/it/infrascripts.git"
-#Git_dir="jira-datacenter/proxies/openrestyConfs/JiraProxySepah-170"
-#Git_dir=""
 
 _file="$1"
 _issue="$2" #issue number from customer request or date of request %m_%d_%Y
