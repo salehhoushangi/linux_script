@@ -134,7 +134,7 @@ else
 fi
 ####13
 echo "####13"
-echo "Ensure chrony is configured (After setting up the Dotin ntp server"
+echo "Ensure chrony is configured (After setting up the ntp server"
 if [ "$(grep -E "^(server|pool)" /etc/chrony.conf)" == "server 172.29.0.42" ]; then
     echo "Time server has been setup>>> ok"
 else
