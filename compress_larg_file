@@ -1,0 +1,39 @@
+!/bin/bash
+
+#Saleh Houshangi 11 JUN 2024
+## finds directories larger than 1 GB, then within those directories, 
+##finds subdirectories larger than 200 MB, 
+##and finally compresses the files within those subdirectories using gzip.
+
+
+base_path="/data/logs"
+
+# Function to check if a file has already been compressed
+is_compressed() {
+    local file=$1
+    [[ $file =~ \.gz$ ]]
+}
+
+# Find directories larger than 1 GB
+find "$base_path" -mindepth 1 -maxdepth 1 -type d -exec du -sh {} + | awk '$1 ~ /[0-9\.]+G/ {print $2}' | while read -r large_dir; do
+    echo "Processing directory larger than 1 GB: $large_dir"
+    
+    # Find subdirectories larger than 200 MB within the large directory
+    find "$large_dir" -mindepth 1 -maxdepth 1 -type d -exec du -sh {} + | awk '$1 ~ /[0-9\.]+M/ && $1+0 >= 200 {print $2}' | while read -r medium_dir; do
+        echo "  Processing subdirectory larger than 200 MB: $medium_dir"
+        
+        # Find files within the subdirectory
+        find "$medium_dir" -type f | while read -r file; do
+            echo "    Processing file: $file"
+            if ! is_compressed "$file"; then
+                # If file is not already compressed, compress it
+                echo "      Compressing file: $file"
+                gzip "$file"
+            else
+                # If a compressed file already exists, create a new gzip file with current date
+                echo "      Creating new compressed file with current date: $file-$(date +%Y-%m-%d_%H-%M-%S).gz"
+                gzip -c "$file" > "$file-$(date +%Y-%m-%d_%H-%M-%S).gz"
+            fi
+        done
+    done
+done
